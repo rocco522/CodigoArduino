@@ -1,0 +1,55 @@
+#include <SoftwareSerial.h>
+
+// Declara el pin 3 y 2, como conexión a la lámpara LED y el ventilador, respectivamente. Ambos son digitales, pero solo el pin 3 permite PWM.
+int lampara = 3;
+int ventilador = 2; 
+
+// Declara la conexión serial para Bluetooth, usando el pin 10 como Rx y el 11 como Tx
+SoftwareSerial BT(10, 11);
+
+// Configuración inicial de la tarjeta
+void setup()
+{
+// Inicializa la conexión serial en una tasa de baudios de 115200
+  BT.begin(115200);
+
+// Inicializa los pines 3 y 2 como pines de salida.
+  pinMode(lampara, OUTPUT);
+  pinMode(ventilador, OUTPUT);
+
+
+
+
+  digitalWrite(13, HIGH);
+}
+
+
+// Configura el ejecutable de la tarjeta
+void loop()
+{
+  // Escucha el canal y determina si está disponible para comunicación
+  while(BT.available() > 0)
+  {
+// Lee el siguiente entero que entra por el canal serial
+    int numero = BT.parseInt();
+    
+    if(numero != -1)
+    {
+// Analiza el entero que entra. Si es 400, envía una señal de ALTO al ventilador y lo enciende. Si es 300, envía una señal // de BAJO al ventilador y lo apaga. Si es cualquier otro valor, lo envía directamente a la lámpara LED para graduar la // intensidad del encendido.
+      switch(numero)
+      {
+        case 400:
+        digitalWrite(ventilador, HIGH);
+        break;
+        
+        case 300:
+        digitalWrite(ventilador, LOW);
+        break;
+        
+        default:
+        analogWrite(lampara, numero);
+        break;
+      }
+    }
+    Serial.println(numero);
+  }
