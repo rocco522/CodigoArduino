@@ -1,0 +1,36 @@
+//#include <Keyboard.h>
+
+//Inicializa la aplicación
+void setup() {
+
+//Usa el Pin 12 para enviar una señal de encendido o apagado del ventilador  
+pinMode(13, OUTPUT);
+
+//Usa una señal para enviar código de regulación de un actuador
+pinMode(12, OUTPUT);
+}
+
+void loop() {
+  float t = dht.readTemperature(); 
+//Lectura de la temperatura ambiente
+  
+// Impresión de los valore leídos
+  
+Serial.println("Temperatura: ");
+  
+Serial.println(t);
+  delay(2000); 
+// Tiempo de espera de 2 segundos para leer de nuevo
+
+}
+digitalWrite(13, HIGH);
+  
+delay(10000);
+  
+digitalWrite(13, LOW);
+  
+delay(10000);
+
+
+}
+
