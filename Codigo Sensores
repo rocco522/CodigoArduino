@@ -1,0 +1,38 @@
+#include <DHT.h>
+
+
+#include "DHT.h" 
+// Se carga la librería DHT
+
+#define DHTPIN 5 
+// Se selecciona el pin por el que se recibirá la información
+
+#define DHTTYPE DHT11 
+// Se define el modulo a usar (DHT11)
+DHT dht(DHTPIN, DHTTYPE);
+
+
+void setup() 
+{  
+ Serial.begin(9600); 
+// Inicia la comunicación serial
+ dht.begin();        
+// Inicia la comunicacion con el sensor 
+}
+
+
+
+void loop() {
+  
+float t = dht.readTemperature(); 
+//Lectura de la temperatura ambiente
+  
+// Impresión de los valore leídos
+  
+Serial.println("Temperatura: ");
+  
+Serial.println(t);
+  delay(2000); 
+// Tiempo de espera de 2 segundos para leer de nuevo
+
+}
